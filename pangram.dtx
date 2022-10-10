@@ -1,0 +1,427 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either
+% version 1.3c of this license or (at your option) any later
+% version. The latest version of this license is in:
+%
+%   http://www.latex-project.org/lppl.txt
+%
+% and version 1.3 or later is part of all distributions of
+% LaTeX version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Zhang Tingxuan.
+%
+% This work consists of the files pangram.dtx,
+%           and the derived files pangram.ins,
+%                                 pangram.sty,
+%                                 pangram.pdf,
+%                             and README.md.
+%
+%<*internal>
+\iffalse
+%</internal>
+%
+%<*readme>
+# The `pangram` Package
+
+The `pangram` package aims to provide an easy way for testing fonts.
+
+See `pangram.pdf` for more. Happy TeXing!
+
+## License
+
+This work may be distributed and/or modified under the conditions of 
+the [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), 
+either version 1.3c of this license or (at your option) any later version.
+
+------
+
+Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>.
+%</readme>
+%
+%<*internal>
+\fi
+\begingroup
+  \def\NameOfLaTeXe{LaTeX2e}
+\expandafter\endgroup\ifx\NameOfLaTeXe\fmtname\else
+\csname fi\endcsname
+%</internal>
+%
+%<*install>
+\input docstrip.tex
+\keepsilent
+
+\preamble
+
+  Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>
+
+  This work may be distributed and/or modified under the
+  conditions of the LaTeX Project Public License, either
+  version 1.3c of this license or (at your option) any later
+  version. The latest version of this license is in:
+
+    http://www.latex-project.org/lppl.txt
+
+  and version 1.3 or later is part of all distributions of
+  LaTeX version 2005/12/01 or later.
+ 
+  This work has the LPPL maintenance status `maintained'.
+ 
+  The Current Maintainer of this work is Zhang Tingxuan.
+
+  This work consists of the files pangram.dtx,
+            and the derived files pangram.ins,
+                                  pangram.sty,
+                                  pangram.pdf,
+                              and README.md.
+
+\endpreamble
+
+\generate{
+  \usedir{tex/latex/pangram}
+    \file{\jobname.sty}      {\from{\jobname.dtx}{package}}
+%</install>
+%<*internal>
+  \usedir{source/latex/pangram}
+    \file{\jobname.ins}      {\from{\jobname.dtx}{install}}
+%</internal>
+%<*install>
+  \usedir{doc/latex/pangram}
+  \nopreamble\nopostamble
+    \file{README.md}         {\from{\jobname.dtx}{readme}}
+}
+
+\obeyspaces
+\Msg{****************************************************}
+\Msg{*                                                  *}
+\Msg{* To finish the installation you have to move the  *}
+\Msg{* following file into a directory searched by TeX: *}
+\Msg{*                                                  *}
+\Msg{*     pangram.sty                                  *}
+\Msg{*                                                  *}
+\Msg{* The recommended directory is                     *}
+\Msg{*   TDS:tex/latex/pangram                          *}
+\Msg{*                                                  *}
+\Msg{* To produce the documentation run the file        *}
+\Msg{* pangram.dtx through XeLaTeX/LuaLaTeX.            *}
+\Msg{* XeLaTeX and LuaLaTeX are recommended if you      *}
+\Msg{* hope the PDF file to be smaller.                 *}
+\Msg{*                                                  *}
+\Msg{* Happy TeXing!                                    *}
+\Msg{*                                                  *}
+\Msg{****************************************************}
+
+\endbatchfile
+%</install>
+%
+%<*internal>
+\fi
+%</internal>
+%
+%<*driver>
+\ProvidesFile{pangram.dtx}[2022/10/9 (c) Copyright 2022 by Zhang Tingxuan]
+\documentclass{ltxdoc}
+
+\usepackage[letterpaper,left=5cm,right=4cm,top=4cm,bottom=4cm,
+  includeheadfoot]{geometry}
+
+\usepackage{xcolor}
+\definecolor{titlecolor}{RGB}{0,12,160}
+\usepackage{doc}
+\usepackage{fancyvrb}
+\fvset{xleftmargin=2.5em,fontsize=\small,gobble=2}
+\MakeShortVerb|
+
+\usepackage{hologo}
+\def\XeTeX{\hologo{XeTeX}}
+\def\LuaTeX{\hologo{LuaTeX}}
+
+\def\pkg{\textsf}
+\def\opt{\texttt}
+
+\title{\leavevmode\hbox to 0pt{\hss\huge The quick brown fox jumps over the lazy dog\hss}\\ 
+  --- The \pkg{pangram} package}
+\author{Zhang Tingxuan}
+\long\date{2022/10/9\quad Version 0.0β\thanks{\url{https://github.com/AlphaZTX/pangram}
+If you want to maintain this package, just contact me through GitHub issues or pull a
+request.}}
+
+\usepackage{hyperref}
+\hypersetup{
+  pdftitle   = {The pangram Package},
+  pdfauthor  = {Zhang Tingxuan},
+  pdfcreator = {XeLaTeX/LuaLaTeX},
+  linkcolor  = black,
+  urlcolor   = titlecolor!80!black,
+}
+\def\pkg{\textsf}
+
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-2.5ex plus -1ex minus -.2ex}%
+  {1ex plus .2ex}%
+  {\normalfont\Large\bfseries\color{titlecolor}}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-2ex plus -1ex minus -.2ex}%
+  {.5ex plus .2ex}%
+  {\normalfont\normalsize\bfseries\color{titlecolor}}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {.8ex plus .4ex minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\color{titlecolor}}}
+\makeatother
+\usepackage{fontspec}
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{Latin Modern Mono}
+\usepackage{pangram}
+
+\linespread{1.05}
+\parskip6pt plus 2pt minus 1pt
+\parindent2.5em
+
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+% 
+%
+% \maketitle
+% 
+% \begin{abstract}
+% Pangram is a phrase or sentence containing all the letters in an alphabet, 
+% usually  used for testing fonts. This package provide a (somewhat) simple 
+% way for font designers or users to test fonts.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \newgeometry{left=1cm,right=1cm,top=1cm,bottom=1cm}
+% \pangram[
+%   sizes   = {  5pt,  6pt,  7pt,  8pt,  9pt,
+%             10pt, 11pt, 12pt, 14pt, 16pt,
+%             18pt, 20pt, 22pt, 24pt, 30pt,
+%             36pt, 40pt, 44pt, 48pt, 64pt,
+%             72pt, 96pt},
+%   linegap = 0pt plus 1fil,
+%   tagfont = \ttfamily\footnotesize\color{gray},
+%   font    = \fontspec{Latin Modern Roman},
+%   after   = \thispagestyle{empty},
+% ]
+% \restoregeometry
+%
+% \section{How to use this package}
+% To load the package, just write
+% \begin{Verbatim}
+% \usepackage{pangram}
+% \end{Verbatim}
+% in preamble.
+% 
+% Then in your document, write
+% \begin{Verbatim}
+% \pangram
+% \end{Verbatim}
+% to get the result like the previous page.
+%
+% Please notice that \cs{pangram} will stay in a seperate page.
+% 
+% \section{Options}
+% The \cs{pangram} command can receive an optional key-val list 
+% specifying the details of the pangram page. Here are the keys:
+% \begin{itemize}
+% \item \opt{textclass} stands for the pangram text in pangram page.
+% The default value is \opt{default}, yields ``The quick brown fox 
+% jumps over the lazy dog. 013456789''. \opt{uppercase} and \opt{glass} 
+% are also available, which yields ``THE QUICK BROWN FOX JUMPS OVER THE 
+% LAZY DOG. 0123456789'' and ``I can eat glass and it doesn't hurt me.'' 
+% (although the latter one cannot be regarded as pangram).
+% 
+% \item \opt{sizes} for the sizes shown in \cs{pangram}. Default value is 
+% \texttt{\{5pt, 7pt, 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 16pt, 18pt, 20pt, 
+% 22pt, 24pt, 36pt, 48pt, 60pt, 72pt\}}.
+% 
+% \item \opt{linegap} is the line skip between two lines in \cs{pangram}. 
+% Default value is \opt{5pt plus 3pt minus 2pt}.
+% 
+% \item \opt{tagskip} is the skip between the tag and the pangram text. 
+% Default value is \opt{5pt}.
+% 
+% \item \opt{tagfont} sets the font of tag. Default value is 
+% |\ttfamily\footnotesize|.
+% 
+% \item \opt{font} sets the font of pangram text. Default value is empty.
+% 
+% \item \opt{before} stands for the content before pangram text in pangram page.
+% Default value is empty.
+% 
+% \item \opt{after} stands for the content after pangram text in pangram page.
+% Default value is empty.
+% \end{itemize}
+% If you want to set the keys globally, use \cs{PangramSetup} in your preamble, 
+% the argument of \cs{PangramSetup} is the same as the one of \cs{pangram}.
+% 
+% Attention! If any of the value to the keys contains an ``\opt{=}'' symbol, 
+% the value should be put into a group. For example,
+% \begin{Verbatim}
+% \pangram[ font={\fontspec{Latin Modern Roman}[Mapping=tex-text]} ]
+% \end{Verbatim}
+% 
+% \section{New pangram text classes}
+% Besides the three pre-defined pangram text classes, you can define your own 
+% pangram text classes through \cs{NewPangramClass}:
+% 
+% \cs{NewPangramClass}\marg{text class}\marg{text}
+% 
+% \section{A complicated example}
+% Set the package globally (used in preamble):
+% \begin{Verbatim}
+% \PangramSetup{
+%   sizes={9bp,10bp,12bp,20bp,36bp,44bp,48bp,64bp},
+%   tagfont=\color{gray}\ttfamily\footnotesize,
+% }
+% \NewPangramClass{abc}{abcdefghijklmnopqrstuvwxyz}
+% \end{Verbatim}
+% 
+% Get the result locally (Needs \pkg{fontspec} package and any package provides 
+% \cs{color} command):
+% \begin{Verbatim}
+% \pangram[font=\fontspec{Latin Modern Roman}]
+% \pangram[textclass=glass,
+%   font={\fontspec{Latin Modern Sans}[Mapping=tex-text]}]
+% \pangram[textclass=abc,font=\fontspec{Latin Modern Mono}]
+% \end{Verbatim}
+% The text class \opt{abc} here is defined in the previous paragraph.
+% 
+% \section{The source code}
+%    \begin{macrocode}
+%<*package>
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+\ProvidesPackage{pangram}[2022/10/09 Pangram, a tool for testing fonts]
+%    \end{macrocode}
+% Use a \opt{clist} to restore the sizes for \cs{pangram}, 
+% and an integer for its index (here we use \opt{index} instead 
+% of \opt{int}).
+%    \begin{macrocode}
+\ExplSyntaxOn
+\clist_new:N \l_pangram_sizes_clist
+\int_new:N \l_pangram_size_index
+\clist_set:Nn \l_pangram_sizes_clist
+  { 
+    5pt,  7pt,  8pt,  9pt, 10pt, 11pt,
+   12pt, 14pt, 16pt, 18pt, 20pt, 22pt,
+   24pt, 36pt, 48pt, 60pt, 72pt
+  }
+%    \end{macrocode}
+% Three pre-defined text classes (token lists) for \cs{pangram}.
+%    \begin{macrocode}
+\tl_const:Nn \c_pangram_text_default_tl
+  { The~quick~brown~fox~jumps~over~the~lazy~dog. ~ 0123456789 }
+\tl_const:Nn \c_pangram_text_uppercase_tl
+  { THE~QUICK~BROWN~FOX~JUMPS~OVER~THE~LAZY~DOG. ~ 0123456789 }
+\tl_const:Nn \c_pangram_text_glass_tl
+  { I~can~eat~glass~and~it~doesn't~hurt~me. }
+%    \end{macrocode}
+% \DescribeMacro{\NewPangramClass}
+% Use way equivalent to \cs{csname}\dots\cs{endcsname} to define 
+% new text classes.
+%    \begin{macrocode}
+\NewDocumentCommand \NewPangramClass { m m }
+  {
+    \exp_after:wN \tl_const:Nn \cs:w c_pangram_text_#1_tl \cs_end: { #2 }
+  }
+%    \end{macrocode}
+% Inner function for \opt{sizes} option. Here use the \pkg{xparse}'s new 
+% \cs{IfBlankTF} mechanism to judge if the sizes should be reset.
+%    \begin{macrocode}
+\NewDocumentCommand \pangram_resetsizes:n { m }
+  {
+    \IfBlankF {#1} { \clist_set:Nn \l_pangram_sizes_clist { #1 } }
+  }
+%    \end{macrocode}
+% The keys.
+%    \begin{macrocode}
+\keys_define:nn { pangram }
+  {
+    textclass.tl_set:N  = \l_pangram_textclass_tl ,
+    textclass.default:n = default ,
+    textclass.initial:n = default ,
+    sizes.code:n        = \pangram_resetsizes:n { #1 } ,
+    linegap.skip_set:N  = \l_pangram_linegap_skip ,
+    linegap.default:n   = 5pt plus 3pt minus 2pt ,
+    linegap.initial:n   = 5pt plus 3pt minus 2pt ,
+    tagskip.skip_set:N  = \l_pangram_tagskip_skip ,
+    tagskip.default:n   = 5pt ,
+    tagskip.initial:n   = 5pt ,
+    tagfont.tl_set:N    = \l_pangram_tagfont_tl ,
+    tagfont.default:n   = \ttfamily \footnotesize ,
+    tagfont.initial:n   = \ttfamily \footnotesize ,
+    font.tl_set:N       = \l_pangram_font_tl ,
+    before.tl_set:N     = \l_pangram_before_tl ,
+    after.tl_set:N      = \l_pangram_after_tl ,
+  }
+%    \end{macrocode}
+% \DescribeMacro{\PangramSetup}
+% Set up the package in preamble.
+%    \begin{macrocode}
+\NewDocumentCommand \PangramSetup { m }
+  { \keys_set:nn { pangram } { #1 } }
+%    \end{macrocode}
+% \DescribeMacro{\pangram}
+% The function itself.
+%    \begin{macrocode}
+\NewDocumentCommand \pangram { +O{} }
+  {
+    \group_begin:
+    \keys_set:nn { pangram } { #1 }
+    \clearpage
+    \skip_set:Nn \parskip { \c_zero_dim }
+%    \end{macrocode}
+% Use a loop to get all of the entries in the sizes \opt{clist}.
+%    \begin{macrocode}
+    \int_set:Nn \l_pangram_size_index { 0 }
+    \tl_use:N \l_pangram_before_tl
+    \int_do_while:nNnn
+      { \l_pangram_size_index } < { \clist_count:N \l_pangram_sizes_clist }
+      {
+        \mode_leave_vertical:
+        \int_incr:N \l_pangram_size_index % index++;
+        \hbox_to_zero:n
+          {
+            \hss
+            \tl_use:N \l_pangram_tagfont_tl
+            \clist_item:Nn \l_pangram_sizes_clist { \l_pangram_size_index }
+            \skip_horizontal:N \l_pangram_tagskip_skip
+          }
+        \hbox_to_zero:n
+          {
+            \tl_use:N \l_pangram_font_tl
+            \fontsize
+              { \clist_item:Nn \l_pangram_sizes_clist { \l_pangram_size_index } }
+              { \c_zero_dim } % \z@
+            \selectfont
+            \tl_use:c { c_pangram_text_ \tl_use:N \l_pangram_textclass_tl _tl }
+            \hss
+          }
+        \int_compare:nNnT 
+          { \l_pangram_size_index } = { \clist_count:N \l_pangram_sizes_clist }
+          { \skip_set:Nn \l_pangram_linegap_skip {0pt} }
+        \par
+        \skip_vertical:N \l_pangram_linegap_skip
+      }
+%    \end{macrocode}
+% The loop ends here.
+%    \begin{macrocode}
+    \tl_use:N \l_pangram_after_tl
+    \clearpage
+    \group_end:
+  }
+\ExplSyntaxOff
+%</package>
+%    \end{macrocode}
+\endinput
