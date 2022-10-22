@@ -147,7 +147,7 @@ Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>.
 \title{\leavevmode\hbox to 0pt{\hss\huge The quick brown fox jumps over the lazy dog\hss}\\ 
   --- The \pkg{pangram} package}
 \author{Zhang Tingxuan}
-\long\date{2022/10/9\quad Version 0.0β\thanks{\url{https://github.com/AlphaZTX/pangram}
+\long\date{2022/10/9\quad Version 0.0b\thanks{\url{https://github.com/AlphaZTX/pangram}
 If you want to maintain this package, just contact me through GitHub issues or pull a
 request.}}
 
@@ -176,14 +176,16 @@ request.}}
   {\normalfont\normalsize\bfseries\color{titlecolor}}}
 \makeatother
 \usepackage{fontspec}
-\setmainfont{Libertinus Serif}
-\setsansfont{Libertinus Sans}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
 \setmonofont{Latin Modern Mono}
+\usepackage{ragged2e}
 \usepackage{pangram}
 
 \linespread{1.05}
-\parskip6pt plus 2pt minus 1pt
+\parskip12pt plus 3pt minus 2pt
 \parindent2.5em
+\RaggedRight
 
 \begin{document}
   \DocInput{\jobname.dtx}
@@ -195,8 +197,9 @@ request.}}
 % \maketitle
 % 
 % \begin{abstract}
-% Pangram is a phrase or sentence containing all the letters in an alphabet, 
-% usually  used for testing fonts. This package provide a (somewhat) simple 
+% Pangram is a phrase or sentence containing all letters in an alphabet, 
+% usually  used for testing fonts. One famous pangram is ``The quick brown 
+% fox jumps over the lazy dog''. This package provide a (somewhat) simple 
 % way for font designers or users to test fonts.
 % \end{abstract}
 %
@@ -237,7 +240,7 @@ request.}}
 % \begin{itemize}
 % \item \opt{textclass} stands for the pangram text in pangram page.
 % The default value is \opt{default}, yields ``The quick brown fox 
-% jumps over the lazy dog. 013456789''. \opt{uppercase} and \opt{glass} 
+% jumps over the lazy dog. 0123456789''. \opt{uppercase} and \opt{glass} 
 % are also available, which yields ``THE QUICK BROWN FOX JUMPS OVER THE 
 % LAZY DOG. 0123456789'' and ``I can eat glass and it doesn't hurt me.'' 
 % (although the latter one cannot be regarded as pangram).

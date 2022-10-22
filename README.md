@@ -13,4 +13,3 @@ either version 1.3c of this license or (at your option) any later version.
 ------
 
 Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>.
-
