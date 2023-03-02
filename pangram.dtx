@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>
+% Copyright (C) 2022--2023 by Zhang Tingxuan <alphaztx@163.com>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -41,7 +41,7 @@ either version 1.3c of this license or (at your option) any later version.
 
 ------
 
-Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>.
+Copyright (C) 2022--2023 by Zhang Tingxuan <alphaztx@163.com>.
 %</readme>
 %
 %<*internal>
@@ -58,7 +58,7 @@ Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>.
 
 \preamble
 
-  Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>
+  Copyright (C) 2022--2023 by Zhang Tingxuan <alphaztx@163.com>
 
   This work may be distributed and/or modified under the
   conditions of the LaTeX Project Public License, either
@@ -124,8 +124,8 @@ Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>.
 %</internal>
 %
 %<*driver>
-\ProvidesFile{pangram.dtx}[2022/10/9 (c) Copyright 2022 by Zhang Tingxuan]
-\documentclass{ltxdoc}
+\ProvidesFile{pangram.dtx}[2023/03/01 (c) Copyright 2022--2023 by Zhang Tingxuan]
+\documentclass{l3doc}
 
 \usepackage[letterpaper,left=5cm,right=4cm,top=4cm,bottom=4cm,
   includeheadfoot]{geometry}
@@ -147,7 +147,7 @@ Copyright (C) 2022 by Zhang Tingxuan <alphaztx@163.com>.
 \title{\leavevmode\hbox to 0pt{\hss\huge The quick brown fox jumps over the lazy dog\hss}\\ 
   --- The \pkg{pangram} package}
 \author{Zhang Tingxuan}
-\long\date{2022/10/9\quad Version 0.0b\thanks{\url{https://github.com/AlphaZTX/pangram}
+\long\date{2023/03/01\quad Version 0.0c\thanks{\url{https://github.com/AlphaZTX/pangram}
 If you want to maintain this package, just contact me through GitHub issues or pull a
 request.}}
 
@@ -199,7 +199,7 @@ request.}}
 % \begin{abstract}
 % Pangram is a phrase or sentence containing all letters in an alphabet, 
 % usually  used for testing fonts. One famous pangram is ``The quick brown 
-% fox jumps over the lazy dog''. This package provide a (somewhat) simple 
+% fox jumps over the lazy dog''. This package provides a (somewhat) simple 
 % way for font designers or users to test fonts.
 % \end{abstract}
 %
@@ -304,17 +304,16 @@ request.}}
 % \section{The source code}
 %    \begin{macrocode}
 %<*package>
+%<@@=pangram>
 \NeedsTeXFormat{LaTeX2e}[2022/06/01]
-\ProvidesPackage{pangram}[2022/10/09 Pangram, a tool for testing fonts]
+\ProvidesExplPackage{pangram}{2023/03/01}{0.0c}{a tool for testing fonts}
 %    \end{macrocode}
 % Use a \opt{clist} to restore the sizes for \cs{pangram}, 
-% and an integer for its index (here we use \opt{index} instead 
-% of \opt{int}).
+% and an integer for its index.
 %    \begin{macrocode}
-\ExplSyntaxOn
-\clist_new:N \l_pangram_sizes_clist
-\int_new:N \l_pangram_size_index
-\clist_set:Nn \l_pangram_sizes_clist
+\clist_new:N \l_@@_sizes_clist
+\int_new:N \l_@@_size_index_int
+\clist_set:Nn \l_@@_sizes_clist
   { 
     5pt,  7pt,  8pt,  9pt, 10pt, 11pt,
    12pt, 14pt, 16pt, 18pt, 20pt, 22pt,
@@ -323,56 +322,59 @@ request.}}
 %    \end{macrocode}
 % Three pre-defined text classes (token lists) for \cs{pangram}.
 %    \begin{macrocode}
-\tl_const:Nn \c_pangram_text_default_tl
-  { The~quick~brown~fox~jumps~over~the~lazy~dog. ~ 0123456789 }
-\tl_const:Nn \c_pangram_text_uppercase_tl
-  { THE~QUICK~BROWN~FOX~JUMPS~OVER~THE~LAZY~DOG. ~ 0123456789 }
-\tl_const:Nn \c_pangram_text_glass_tl
-  { I~can~eat~glass~and~it~doesn't~hurt~me. }
+\tl_const:Nn \c_@@_text_default_tl
+  { The ~ quick ~ brown ~ fox ~ jumps ~ over ~ the ~ lazy ~ dog. ~ 0123456789 }
+\tl_const:Nn \c_@@_text_uppercase_tl
+  { THE ~ QUICK ~ BROWN ~ FOX ~ JUMPS ~ OVER ~ THE ~ LAZY ~ DOG. ~ 0123456789 }
+\tl_const:Nn \c_@@_text_glass_tl
+  { I ~ can ~ eat ~ glass ~ and ~ it ~ doesn't ~ hurt ~ me. }
 %    \end{macrocode}
 % \DescribeMacro{\NewPangramClass}
 % Use way equivalent to \cs{csname}\dots\cs{endcsname} to define 
 % new text classes.
 %    \begin{macrocode}
-\NewDocumentCommand \NewPangramClass { m m }
+\NewDocumentCommand \NewPangramClass { m +m }
   {
-    \exp_after:wN \tl_const:Nn \cs:w c_pangram_text_#1_tl \cs_end: { #2 }
+    \tl_const:cn { c_@@_text_#1_tl } { #2 }
   }
 %    \end{macrocode}
 % Inner function for \opt{sizes} option. Here use the \pkg{xparse}'s new 
 % \cs{IfBlankTF} mechanism to judge if the sizes should be reset.
 %    \begin{macrocode}
-\NewDocumentCommand \pangram_resetsizes:n { m }
+\cs_new:Npn \@@_resetsizes:n #1
   {
-    \IfBlankF {#1} { \clist_set:Nn \l_pangram_sizes_clist { #1 } }
+    \tl_if_blank:nF { #1 }
+      {
+        \clist_set:Nn \l_@@_sizes_clist { #1 }
+      }
   }
 %    \end{macrocode}
 % The keys.
 %    \begin{macrocode}
 \keys_define:nn { pangram }
   {
-    textclass.tl_set:N  = \l_pangram_textclass_tl ,
+    textclass.tl_set:N  = \l_@@_textclass_tl ,
     textclass.default:n = default ,
     textclass.initial:n = default ,
-    sizes.code:n        = \pangram_resetsizes:n { #1 } ,
-    linegap.skip_set:N  = \l_pangram_linegap_skip ,
+    sizes.code:n        = \@@_resetsizes:n { #1 } ,
+    linegap.skip_set:N  = \l_@@_linegap_skip ,
     linegap.default:n   = 5pt plus 3pt minus 2pt ,
     linegap.initial:n   = 5pt plus 3pt minus 2pt ,
-    tagskip.skip_set:N  = \l_pangram_tagskip_skip ,
+    tagskip.skip_set:N  = \l_@@_tagskip_skip ,
     tagskip.default:n   = 5pt ,
     tagskip.initial:n   = 5pt ,
-    tagfont.tl_set:N    = \l_pangram_tagfont_tl ,
+    tagfont.tl_set:N    = \l_@@_tagfont_tl ,
     tagfont.default:n   = \ttfamily \footnotesize ,
     tagfont.initial:n   = \ttfamily \footnotesize ,
-    font.tl_set:N       = \l_pangram_font_tl ,
-    before.tl_set:N     = \l_pangram_before_tl ,
-    after.tl_set:N      = \l_pangram_after_tl ,
+    font.tl_set:N       = \l_@@_font_tl ,
+    before.tl_set:N     = \l_@@_before_tl ,
+    after.tl_set:N      = \l_@@_after_tl ,
   }
 %    \end{macrocode}
 % \DescribeMacro{\PangramSetup}
 % Set up the package in preamble.
 %    \begin{macrocode}
-\NewDocumentCommand \PangramSetup { m }
+\NewDocumentCommand \PangramSetup { +m }
   { \keys_set:nn { pangram } { #1 } }
 %    \end{macrocode}
 % \DescribeMacro{\pangram}
@@ -387,44 +389,43 @@ request.}}
 %    \end{macrocode}
 % Use a loop to get all of the entries in the sizes \opt{clist}.
 %    \begin{macrocode}
-    \int_set:Nn \l_pangram_size_index { 0 }
-    \tl_use:N \l_pangram_before_tl
+    \int_set:Nn \l_@@_size_index_int { 0 }
+    \tl_use:N \l_@@_before_tl
     \int_do_while:nNnn
-      { \l_pangram_size_index } < { \clist_count:N \l_pangram_sizes_clist }
+      { \l_@@_size_index_int } < { \clist_count:N \l_@@_sizes_clist }
       {
         \mode_leave_vertical:
-        \int_incr:N \l_pangram_size_index % index++;
+        \int_incr:N \l_@@_size_index_int
         \hbox_to_zero:n
           {
             \hss
-            \tl_use:N \l_pangram_tagfont_tl
-            \clist_item:Nn \l_pangram_sizes_clist { \l_pangram_size_index }
-            \skip_horizontal:N \l_pangram_tagskip_skip
+            \tl_use:N \l_@@_tagfont_tl
+            \clist_item:Nn \l_@@_sizes_clist { \l_@@_size_index_int }
+            \skip_horizontal:N \l_@@_tagskip_skip
           }
         \hbox_to_zero:n
           {
-            \tl_use:N \l_pangram_font_tl
+            \tl_use:N \l_@@_font_tl
             \fontsize
-              { \clist_item:Nn \l_pangram_sizes_clist { \l_pangram_size_index } }
+              { \clist_item:Nn \l_@@_sizes_clist { \l_@@_size_index_int } }
               { \c_zero_dim } % \z@
             \selectfont
-            \tl_use:c { c_pangram_text_ \tl_use:N \l_pangram_textclass_tl _tl }
+            \tl_use:c { c_@@_text_ \tl_use:N \l_@@_textclass_tl _tl }
             \hss
           }
         \int_compare:nNnT 
-          { \l_pangram_size_index } = { \clist_count:N \l_pangram_sizes_clist }
-          { \skip_set:Nn \l_pangram_linegap_skip {0pt} }
+          { \l_@@_size_index_int } = { \clist_count:N \l_@@_sizes_clist }
+          { \skip_set:Nn \l_@@_linegap_skip { \c_zero_dim } }
         \par
-        \skip_vertical:N \l_pangram_linegap_skip
+        \skip_vertical:N \l_@@_linegap_skip
       }
 %    \end{macrocode}
 % The loop ends here.
 %    \begin{macrocode}
-    \tl_use:N \l_pangram_after_tl
+    \tl_use:N \l_@@_after_tl
     \clearpage
     \group_end:
   }
-\ExplSyntaxOff
 %</package>
 %    \end{macrocode}
 \endinput
